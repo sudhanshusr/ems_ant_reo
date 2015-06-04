@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="ems_ant_TEMP" default="war" basedir=".">
+<project xmlns:ivy="antlib:org.apache.ivy.ant" name="ems_ant_TEMP" default="war" basedir=".">
   <!-- Sets variables which can later be used. -->
   <!-- The value of a property is accessed via ${} -->
   <property name="src.dir" location="src" />
@@ -20,24 +20,35 @@
     <mkdir dir="${docs.dir}" />
     <mkdir dir="${dist.dir}" />
   </target>
+  
+   <!-- ================================= 
+          target: resolve              
+         ================================= -->
+    <target name="resolve" description="--> retrieve dependencies with ivy">
+        <ivy:retrieve />
+    </target>
 
   <!-- Compiles the java code (including the usage of library for JUnit -->
-  <target name="compile" depends="clean, makedir">
+  <target name="compile" depends="clean, makedir, resolve">
     <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}">
 	<classpath>
         <pathelement path="lib/org.springframework.beans-3.0.0.RELEASE.jar"/>
-		<pathelement path="lib/org.springframework.core-3.0.0.RELEASE.jar"/>
+		<!--<pathelement path="lib/org.springframework.core-3.0.0.RELEASE.jar"/>
 		<pathelement path="lib/org.springframework.jdbc-3.0.0.RELEASE.jar"/>
 		<pathelement path="lib/org.springframework.transaction-3.0.0.RELEASE.jar"/>
 		<pathelement path="lib/org.springframework.web.struts-3.0.0.RELEASE.jar"/>
-		<pathelement path="lib/org.springframework.web-3.0.0.RELEASE.jar"/>
+		<pathelement path="lib/org.springframework.web-3.0.0.RELEASE.jar"/>-->
 		<pathelement path="lib/org.springframework.context-3.0.0.RELEASE.jar"/>
-		<pathelement path="lib/org.springframework.aop-3.0.0.RELEASE.jar"/>
+		<!--<pathelement path="lib/org.springframework.aop-3.0.0.RELEASE.jar"/> -->
 		<pathelement path="lib/spring-webmvc-3.0.5.RELEASE.jar"/>
-		<pathelement path="lib/hibernate-annotations-3.4.0.GA.jar"/>
+		<pathelement path="lib/spring-web-3.0.5.RELEASE.jar"/>
+		<pathelement path="lib/spring-tx-4.1.4.RELEASE.jar"/>
+		<pathelement path="lib/persistence-api-1.0.jar"/>
+		
+		<!-- <pathelement path="lib/hibernate-annotations-3.4.0.GA.jar"/>
 		<pathelement path="lib/commons-collections-3.2.1.jar"/>
 		<pathelement path="lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
-		<pathelement path="lib/servlet-api-2.3.jar"/>
+		<pathelement path="lib/servlet-api-2.3.jar"/> -->
 		<pathelement path="lib/hibernate-3.2.6.ga.jar"/>
     </classpath>
     </javac>
